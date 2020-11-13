@@ -1,0 +1,60 @@
+DROP DATABASE IF EXISTS `bookstore`;
+CREATE DATABASE `bookstore`;
+USE `bookstore`;
+
+CREATE TABLE `product` (
+  `reference` numeric NOT NULL,
+  `pddesignation` varchar(50) DEFAULT NULL,
+  `unitprice` numeric NOT NULL,
+  `type` varchar(50) NOT NULL,
+  `title` varchar(50) NOT NULL,
+  `author` varchar(50) DEFAULT NULL,
+  `releasedate` Date DEFAULT NULL,
+  PRIMARY KEY  (`reference`),
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+CREATE TABLE `admin` (
+  `identifiant` numeric NOT NULL,
+  `cin` numeric NOT NULL,
+  `nom` varchar(50) NOT NULL,
+  `prenom` varchar(50) NOT NULL,
+  `age` numeric NOT NULL,
+  PRIMARY KEY  (`identifiant`),
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+CREATE TABLE `utilisateur` (
+  `numero` numeric NOT NULL,
+  `cin` numeric NOT NULL,
+  `nom` varchar(50) NOT NULL,
+  `prenom` varchar(50) NOT NULL,
+  `age` numeric NOT NULL,
+  PRIMARY KEY  (`numero`),
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+CREATE TABLE `order` (
+  `numero` numeric NOT NULL,
+  `numerouser` numeric NOT NULL,
+  `date` Date DEFAULT NULL,
+  PRIMARY KEY  (`numero`),
+  FOREIGN KEY (`numerouser`) REFERENCES utilisateur (`numero`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+CREATE TABLE `lineorder` (
+  `linenumber` numeric NOT NULL,
+  `quantity` numeric NOT NULL,
+  `reference` numeric NOT NULL,
+  `numero` numeric NOT NULL,
+  `priceline` numeric NOT NULL,
+  PRIMARY KEY  (`linenumber`,`reference`,`numero`),
+  FOREIGN KEY (`reference`) REFERENCES product (`reference`),
+  FOREIGN KEY (`numero`) REFERENCES bookstore.order (`numero`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+

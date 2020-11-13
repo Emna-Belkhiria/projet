@@ -1,4 +1,4 @@
-package paracticalexercice;
+package metier;
 
 import java.util.Scanner;
 
